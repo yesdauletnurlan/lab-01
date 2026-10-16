@@ -1,5 +1,4 @@
-package org.example;
-
+package org.example.domain;
 public record IssueId(String value) {
     public IssueId {
         if (value == null || value.isBlank()) {
