@@ -2,6 +2,7 @@ package org.example.persistence;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
 import java.util.UUID;
 
@@ -28,4 +29,20 @@ public class IssueJdbc {
                 businessKey);
         return n == null ? 0 : n;
     }
+    public Optional<IssueRow> findById(UUID id) {
+        var list = jdbc.query(
+                "SELECT id, business_key, status, title FROM issue WHERE id = ?",
+                (rs, rowNum) -> new IssueRow(
+                        UUID.fromString(rs.getString("id")),
+                        rs.getString("business_key"),
+                        rs.getString("status"),
+                        rs.getString("title")
+                ),
+                id
+        );
+        return list.stream().findFirst();
+    }
+
+    public record IssueRow(UUID id, String businessKey, String status, String title) {}
+
 }
