@@ -58,3 +58,12 @@ Arrows point inward. Domain never imports org.springframework.
 3. Spring injects `List<Rule>` into `IssueService` (`@Service`).
 4. `IssueService.move(from, to)` runs every rule in order.
 5. Any failing rule throws `IllegalStateException`.
+
+## Database
+
+- PostgreSQL with table `issue`.
+- `id` is a UUID primary key (generated in Java).
+- `business_key` is a human-readable number, UNIQUE and NOT NULL.
+- `status` has a CHECK constraint for ('TODO', 'IN_PROGRESS', 'DONE').
+- JDBC repository (`IssueJdbc`) uses `JdbcTemplate` and `?` placeholders.
+- Duplicate business keys throw `DuplicateIssue` (unchecked) and roll back the transaction.

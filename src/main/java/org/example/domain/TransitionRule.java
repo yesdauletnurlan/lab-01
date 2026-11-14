@@ -1,5 +1,8 @@
 package org.example.domain;
 
+import org.example.domain.IssueStatus;
+import org.example.domain.Rule;
+
 public class TransitionRule implements Rule {
 
     @Override
